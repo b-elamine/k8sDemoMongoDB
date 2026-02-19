@@ -1,0 +1,37 @@
+# These are examples of PV config files : 
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-name
+spe:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: slow
+  mountOption:
+    - hard
+    - nfsvers=4.0
+  nfs:
+    path: /dir/path-on/nfs-server
+    server: nfs-server-ip-@
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: test-volume
+  labels:
+    failure-domain.beta.kubernetes.io/zone: us-centrall-a__us-centrall-b
+spec:
+  capacity:
+    storage: 400Gi
+  accessModes:
+  - ReadWriteOnce
+  gcePersistentDisk:
+    pdName: my-data-disk
+    fsType: ext4
