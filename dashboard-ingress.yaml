@@ -7,6 +7,11 @@ metadata:
   name: dashboard-ingress
   namespace: kubernetes-dashboard
 spec:
+# Created a Secret for the tls cert
+  tls:
+  - hosts:
+    - dashboard.com
+    secretName: dashboard-secret-tls
   rules:
   - host: dashboard.com
     http:
