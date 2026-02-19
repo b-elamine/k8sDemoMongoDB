@@ -1,5 +1,6 @@
 # These are examples of PV config files : 
 
+#NFS Ex
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -21,6 +22,7 @@ spe:
 
 ---
 
+#Google Cloud Ex 
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -35,3 +37,29 @@ spec:
   gcePersistentDisk:
     pdName: my-data-disk
     fsType: ext4
+
+---
+
+#Local Storage Ex
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: example-pv
+spec:
+  capacity:
+    storage: 100Gi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPlocity: Delete
+  storageClassName: local-storage
+  local:
+    path: /mnt/disks/ssd1
+    nodeAffinity:
+      required:
+        nodeSelectorTerms: 
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            volumes:
+            - example-node
